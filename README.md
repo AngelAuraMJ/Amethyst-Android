@@ -1,4 +1,4 @@
-<h1 align="center">Angel Aura Amethyst</h1>
+<h1 align="center">Angel Aura Amethyst (aka. Amethyst Reborn)</h1>
 
 <img src="https://github.com/AngelAuraMC/Amethyst-Android/blob/v3_openjdk/app_pojavlauncher/src/main/assets/amethyst.png" align="left" width="130" height="130" alt="Amethyst logo">
 
@@ -12,6 +12,9 @@
 Amethyst is a launcher that allows you to play Minecraft: Java Edition on your Android and [iOS](https://github.com/AngelAuraMC/Amethyst-iOS) devices.
 
 For more details, check out our [wiki](https://wiki.angelauramc.dev)!
+
+> [!IMPORTANT]
+> This is not the original Amethyst Android. This project is based on [MojoLauncher](https://github.com/MojoLauncher/MojoLauncher). For more details, please see [DISCLAIMER.md](DISCLAIMER.md).
 
 ## Table of Contents
 
@@ -34,13 +37,13 @@ For more details, check out our [wiki](https://wiki.angelauramc.dev)!
 * Amethyst is a Minecraft: Java Edition launcher for Android and iOS based on [Boardwalk](https://github.com/zhuowei/Boardwalk) and [PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher)
 * This launcher can launch almost all available Minecraft versions ranging from rd-132211 to 26.3-snapshot-1.
 * Modding via Forge and Fabric are also supported.
-* This repository contains source code for Android. For iOS/iPadOS, check out [Amethyst-iOS](https://github.com/AngelAuraMC/Amethyst-iOS).
+* This repository contains source code for Android. For iOS/iPadOS, check out [Amethyst-iOS](https://github.com/AngelAuraMJ/Amethyst-iOS).
 
 ## Getting Amethyst
 
 You can get Amethyst via two methods:
 
-1. **Releases:** Download the latest prebuilt app from [nightly.link](https://nightly.link/AngelAuraMC/Amethyst-Android/workflows/android/v3_openjdk/app-debug%20%28recommended%29.zip) or select an older version from our [automatic builds](https://github.com/AngelAuraMC/Amethyst-Android/actions).
+1. **Releases:** Download the latest prebuilt app from [nightly.link](https://nightly.link/AngelAuraMJ/Amethyst-Android/workflows/android/v3_openjdk/app-debug%20%28recommended%29.zip) or select an older version from our [automatic builds](https://github.com/AngelAuraMC/Amethyst-Android/actions).
 2. **Build from Source:** Follow the [building instructions](#building) below.
 
 ## Building
@@ -61,7 +64,7 @@ You can get Amethyst via two methods:
 
 The easiest way to build Amethyst is to use the pre-built JREs provided by our CI.
 
-1. Clone the repository: `git clone --recursive https://github.com/AngelAuraMC/Amethyst-Android.git`
+1. Clone the repository: `git clone --recursive https://github.com/AngelAuraMJ/Amethyst-Android.git`
 2. Build the launcher: `./gradlew :app_pojavlauncher:assembleDebug` (Use `gradlew.bat` on Windows)
 
 The built APK will be located in `app_pojavlauncher/build/outputs/apk/debug/`.
@@ -70,9 +73,9 @@ The built APK will be located in `app_pojavlauncher/build/outputs/apk/debug/`.
 
 If you need more control over the build process, follow these steps:
 
-1. **Java Runtime Environment (JRE):** Download the `jre8-pojav` artifact from our [CI auto builds](https://github.com/AngelAuraMC/openjdk-build-multiarch/actions), unzip and paste the contents of the downloaded zip into `app_pojavlauncher/src/main/assets/components/jre/`, create the folder if it does not exist.  This package contains pre-built JREs for all supported architectures.  If you need to build the JRE yourself, follow the instructions in the [android-openjdk-build-multiarch](https://github.com/AngelAuraMC/openjdk-build-multiarch) repository.
+1. **Java Runtime Environment (JRE):** Download the `jre8-pojav` artifact from our [CI auto builds](https://github.com/AngelAuraMJ/openjdk-build-multiarch/actions), unzip and paste the contents of the downloaded zip into `app_pojavlauncher/src/main/assets/components/jre/`, create the folder if it does not exist.  This package contains pre-built JREs for all supported architectures.  If you need to build the JRE yourself, follow the instructions in the [android-openjdk-build-multiarch](https://github.com/AngelAuraMJ/openjdk-build-multiarch) repository.
 
-2. **LWJGL:** The build instructions for the custom LWJGL are available over the [LWJGL repository](https://github.com/AngelAuraMC/lwjgl3).
+2. **LWJGL:** The build instructions for the custom LWJGL are available over the [LWJGL repository](https://github.com/AngelAuraMJ/lwjgl3).
 
 3. **Language List:** Because languages are auto-added by Crowdin, you need to run the language list generator before building. In the project directory, run:
    * Linux/macOS:
@@ -108,7 +111,7 @@ If you need more control over the build process, follow these steps:
 
 ## Known Issues
 
-See our [issue tracker](https://github.com/AngelAuraMC/Amethyst-Android/issues) for a list of known issues and their current status.
+See our [issue tracker](https://github.com/AngelAuraMJ/Amethyst-Android/issues) for a list of known issues and their current status.
 
 ## FAQ
 
@@ -116,22 +119,23 @@ See our [wiki](https://wiki.angelauramc.dev/) for more information.
 
 ## Contributing
 
-Contributions are welcome! We welcome any type of contribution, not only code. For example, you can help improve the [wiki](https://github.com/AngelAuraMC/angelauramc.github.io/), contribute to the [translations](https://crowdin.com/project/pojavlauncher), or submit bug reports and feature requests.
+Contributions are welcome! We welcome any type of contribution, not only code. For example, you can help improve the [wiki](https://github.com/AngelAuraMJ/angelauramc.github.io/), contribute to the [translations](https://crowdin.com/project/pojavlauncher), or submit bug reports and feature requests.
 
 Any code change should be submitted as a pull request. The description should explain what the code does and give steps to execute it.
 
 ## Support
 
-For support, please join our [Discord server](https://discord.gg/5ptqkyZxEy).
+For support, please join our [Discord server](https://discord.gg/j8GTQv3YvY).
 
 ## License
 
-Amethyst is licensed under [GNU LGPLv3](https://github.com/AngelAuraMC/Amethyst-Android/blob/v3_openjdk/LICENSE).
+Amethyst is licensed under [GNU LGPLv3](https://github.com/AngelAuraMJ/Amethyst-Android/blob/v3_openjdk/LICENSE).
 
 ## Credits & Dependencies
 
 * [Boardwalk](https://github.com/zhuowei/Boardwalk) (JVM Launcher): Unknown License/[Apache License 2.0](https://github.com/zhuowei/Boardwalk/blob/master/LICENSE) or GNU GPLv2.
 * [PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher): [GLGPL](https://github.com/PojavLauncherTeam/PojavLauncher/blob/v3_openjdk/LICENSE)
+* [Amethyst-Android](https://github.com/AngelAuraMC/Amethyst-Android): [GNU LGPLv3](https://github.com/AngelAuraMC/Amethyst-Android/blob/v3_openjdk/LICENSE)
 * Android Support Libraries: [Apache License 2.0](https://android.googlesource.com/platform/prebuilts/maven_repo/android/+/master/NOTICE.txt).
 * [GL4ES](https://github.com/AngelAuraMC/gl4es): [MIT License](https://github.com/ptitSeb/gl4es/blob/master/LICENSE).
 * [MobileGlues](https://github.com/MobileGL-Dev/MobileGlues): [LGPL-2.1 License](https://github.com/MobileGL-Dev/MobileGlues/blob/dev-es/LICENSE).
