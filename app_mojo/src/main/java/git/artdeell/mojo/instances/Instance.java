@@ -28,6 +28,8 @@ public class Instance extends DisplayInstance {
     public String selectedRuntime;
     public String controlLayout;
     public boolean sharedData;
+    /** Per-instance ANGLE switch, independent from the global ANGLE preferences. null means off */
+    public Boolean useAngle;
 
     protected Instance() {
     }
@@ -113,5 +115,23 @@ public class Instance extends DisplayInstance {
     public File getGameDirectory() {
         if(sharedData) return Instances.SHARED_DATA_DIRECTORY;
         return mInstanceRoot;
+    }
+
+    /**
+     * Whether ANGLE should be used as the OpenGL ES driver for this instance.
+     * Independent from the global ANGLE preferences, off until the instance checkbox is enabled.
+     * @return true if ANGLE is requested for this instance
+     */
+    public boolean shouldUseAngle() {
+        return useAngle != null && useAngle;
+    }
+
+    /**
+     * Whether the system ANGLE should be preferred over the external one for this instance.
+     * Only applies if ANGLE is requested for this instance at all.
+     * @return true if system ANGLE is requested for this instance
+     */
+    public boolean shouldUseSystemAngle() {
+        return shouldUseAngle() && LauncherPreferences.PREF_USE_SYSTEM_ANGLE;
     }
 }

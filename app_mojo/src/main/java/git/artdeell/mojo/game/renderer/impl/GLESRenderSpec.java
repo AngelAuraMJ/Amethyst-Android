@@ -4,11 +4,17 @@ import android.content.Context;
 import android.util.Log;
 
 import git.artdeell.mojo.Tools;
+import git.artdeell.mojo.extra.ExtraConstants;
+import git.artdeell.mojo.extra.ExtraCore;
+import git.artdeell.mojo.game.renderer.GameRenderer;
 import git.artdeell.mojo.game.renderer.RenderSpec;
 import git.artdeell.mojo.game.renderer.def.Renderers;
 import git.artdeell.mojo.game.renderer.extra.GLESProvider;
 import git.artdeell.mojo.prefs.LauncherPreferences;
 import git.artdeell.mojo.utils.JREUtils;
+import git.artdeell.mojo.utils.jre.GameRunner;
+import git.artdeell.mojo.instances.Instance;
+import git.artdeell.mojo.instances.Instances;
 
 import java.io.File;
 import java.util.Map;
@@ -23,7 +29,10 @@ public abstract class GLESRenderSpec implements RenderSpec {
     private boolean nsBypass = false;
     protected abstract int glesVersion();
     public void setupEnvironment(Context context, Map<String, String> envMap) {
-        GLESProvider provider = GLESProvider.getGlesProvider(context, LauncherPreferences.PREF_USE_ANGLE);
+        Instance instance = Instances.loadSelectedInstance();
+        boolean preferAngle = instance != null ? instance.shouldUseAngle() : LauncherPreferences.PREF_USE_ANGLE;
+        boolean preferSystemAngle = instance != null ? instance.shouldUseSystemAngle() : LauncherPreferences.PREF_USE_SYSTEM_ANGLE;
+        GLESProvider provider = GLESProvider.getGlesProvider(context, preferAngle, preferSystemAngle);
         Log.i("GLESRenderSpec", "Using GLESProvider: " + provider.type());
         provider.setEnvironment(envMap);
         this.nsBypass = provider.requiresNamespace();
@@ -80,4 +89,107 @@ public abstract class GLESRenderSpec implements RenderSpec {
             return 2;
         }
     }
+
+   public static class NGGL4ESRenderSpec extends GLESRenderSpec {
+       public boolean compatibleDevice(Context context) {
+       return JREUtils.getDetectedVersion() >= 3 && new File(Tools.NATIVE_LIB_DIR, this.library()).exists();
+      }
+       public String name() {
+         return "NG-GL4ES";
+       }
+
+       public int displayName() {
+         return R.string.mcl_setting_renderer_nggl4es;
+       }
+
+       public void setupEnvironment(Context context, Map<String, String> envMap) {
+         envMap.put("LIBGL_USE_MC_COLOR", "1");
+         envMap.put("LIBGL_GL", "31");
+         envMap.put("LIBGL_ES", "3");
+         envMap.put("LIBGL_NORMALIZE", "1");
+         envMap.put("LIBGL_NOERROR", "1");
+       }
+
+       public String tag() {
+         return Renderers.NGGL4ES_RENDERER;
+       }
+
+       public  String library() {
+         return "libng_gl4es.so";
+       }
+
+       protected int glesVersion() {
+         return 3;
+       }
+     }
+
+     public static class MgRenderSpec extends GLESRenderSpec {
+       public boolean compatibleDevice(Context context) {
+         return JREUtils.getDetectedVersion() >= 3 && new File(Tools.NATIVE_LIB_DIR, this.library()).exists(); 
+      }
+       public String name() {
+         return "MG-ES";
+       }
+
+       public int displayName() {
+         return R.string.mcl_setting_renderer_mobileglues;
+       }
+
+       public void setupEnvironment(Context context, Map<String, String> envMap) {
+          envMap.put("MG_DIR_PATH", Tools.DIR_DATA + "/MobileGlues");
+       }
+
+       public String tag() {
+         return Renderers.MOBILEGLUES_RENDERER;
+       }
+
+       public String library() {
+         return "libmobileglues.so";
+       }
+
+       protected int glesVersion() {
+        return 3;
+       }
+
+     }
+
+     public static class SFPEWRenderSpec extends GLESRenderSpec {
+       public boolean compatibleDevice(Context context) {
+         return new File(Tools.NATIVE_LIB_DIR, this.library()).exists();
+       }
+
+       public String name() {
+         return "SFPEW";
+       }
+
+       public int displayName() {
+         return R.string.mcl_setting_renderer_sfpew;
+       }
+
+       public void setupEnvironment(Context context, Map<String, String> envMap) {
+         // Check if Angelica mod is present
+         Instance instance = Instances.loadSelectedInstance();
+         File gamedir = instance.getGameDirectory();
+         boolean hasAngelica = GameRunner.hasAngelica(gamedir);
+
+         if (!hasAngelica) {
+           // SFPEW wraps MobileGlues for better stability but why not LTW? Idk
+           envMap.put("SFPEW_EGL", "libmobileglues.so");
+           envMap.put("MG_DIR_PATH", Tools.DIR_DATA + "/MobileGlues");
+         }
+         // If Angelica is present, don't set SFPEW_EGL (Angelica provides its own FPE)
+       }
+
+       public String tag() {
+         return Renderers.SFPEW_RENDERER;
+       }
+
+       public String library() {
+         return "libSimpleFPEWrapper.so";
+       }
+
+       protected int glesVersion() {
+         return 3;
+       }
+     }
 }

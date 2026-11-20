@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application' version '8.11.1'
+    id 'org.jetbrains.kotlin.android' version '2.2.10'
     id 'de.undercouch.download' version '5.6.0'
     id 'org.ajoberstar.grgit' version '5.3.2'
 }
@@ -78,7 +79,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "git.artdeell.mjlaunch"
+        applicationId "org.angelauramj.amethyst"
         minSdkVersion 21
         targetSdkVersion 36
         versionCode getDateSeconds()
@@ -108,8 +109,8 @@ android {
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.customDebug
-            resValue 'string', 'application_package', 'git.artdeell.mjlaunch.debug'
-            resValue 'string', 'storageProviderAuthorities', 'git.artdeell.mjlaunch.scoped.gamefolder.debug'
+            resValue 'string', 'application_package', 'org.angelauramj.amethyst.debug'
+            resValue 'string', 'storageProviderAuthorities', 'org.angelauramj.amethyst.scoped.gamefolder.debug'
         }
         proguard {
             initWith debug
@@ -129,8 +130,8 @@ android {
             // defaultConfig already set
             // multiDexEnabled = true
             // debuggable = true
-            resValue 'string', 'storageProviderAuthorities', 'git.artdeell.mjlaunch.scoped.gamefolder'
-            resValue 'string', 'application_package', 'git.artdeell.mjlaunch'
+            resValue 'string', 'storageProviderAuthorities', 'org.angelauramj.amethyst.scoped.gamefolder'
+            resValue 'string', 'application_package', 'org.angelauramj.amethyst'
         }
         gplay {
             initWith release
@@ -157,6 +158,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     bundle {
         language {
             enableSplit = false
@@ -172,6 +177,7 @@ android {
 
     buildFeatures {
         buildConfig true
+        aidl true
     }
 }
 
@@ -296,6 +302,7 @@ afterEvaluate {
 
         registrar.projectJarDependency project(":forge_installer"), "components/forge_installer"
         registrar.projectJarDependency project(":NoBlocklist"), "components/noblocklist"
+        registrar.projectJarDependency project(":MioLibPatcher"), "components/MioLibPatcher"
 
 		if (variant.getName().toLowerCase().contains("full")) {
             registrar.jreRuntimeDependency 8, "components/jre"
@@ -315,6 +322,9 @@ dependencies {
     implementation 'commons-codec:commons-codec:1.19.0'
     // implementation 'com.wu-man:android-bsf-api:3.1.3'
     implementation 'androidx.preference:preference:1.2.1'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.8.7'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0'
+    implementation 'androidx.documentfile:documentfile:1.1.0'
     //implementation 'androidx.core:core:1.7.0'
     implementation 'androidx.drawerlayout:drawerlayout:1.2.0'
     implementation 'androidx.viewpager2:viewpager2:1.1.0'

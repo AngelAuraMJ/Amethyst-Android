@@ -62,6 +62,8 @@ import git.artdeell.mojo.input.EditorExitable;
 import git.artdeell.mojo.input.keyboard.TouchCharInput;
 import git.artdeell.mojo.input.mouse.GyroControl;
 import git.artdeell.mojo.input.mouse.HotbarView;
+import git.artdeell.mojo.game.renderer.RenderSpec;
+import git.artdeell.mojo.game.renderer.impl.GLESRenderSpec;
 import git.artdeell.mojo.instances.Instance;
 import git.artdeell.mojo.instances.Instances;
 import git.artdeell.mojo.utils.lifecycle.ContextExecutor;
@@ -413,6 +415,14 @@ public class GameActivity extends BaseActivity implements ControlButtonMenuListe
         Logger.appendToLog("--------- Starting game with Launcher Debug!");
         Tools.printLauncherInfo(versionId, instance.getLaunchArgs(), mGameRenderer.getCurrentRenderer(), this);
         JREUtils.redirectAndPrintJRELog();
+
+        // Show Angelica + SFPEW notice
+        RenderSpec renderer = mGameRenderer.getCurrentRenderer();
+        File gamedir = instance.getGameDirectory();
+        if (GameRunner.hasAngelica(gamedir) && renderer instanceof GLESRenderSpec.SFPEWRenderSpec) {
+            Toast.makeText(this, R.string.angelica_found_sfpew_notice, Toast.LENGTH_LONG).show();
+        }
+
         GameRunner.launchGame(this, account, instance, versionId, classpath, mGameRenderer);
         //Note that we actually stall in the above function, even if the game crashes. But let's be safe.
         Tools.runOnUiThread(()-> mServiceBinder.isActive = false);
